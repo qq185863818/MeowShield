@@ -1,0 +1,57 @@
+function encodeUTF8(s) {
+  var i;
+  var r = [];
+  var c;
+  var x;
+  for (i = 0; i < s.length; i++) if ((c = s.charCodeAt(i)) < 0x80) r.push(c);else if (c < 0x800) r.push(0xC0 + (c >> 6 & 0x1F), 0x80 + (c & 0x3F));else {
+    if ((x = c ^ 0xD800) >> 10 == 0) c = (x << 10) + (s.charCodeAt(++i) ^ 0xDC00) + 0x10000, r.push(0xF0 + (c >> 18 & 0x7), 0x80 + (c >> 12 & 0x3F));else r.push(0xE0 + (c >> 12 & 0xF));
+    r.push(0x80 + (c >> 6 & 0x3F), 0x80 + (c & 0x3F));
+  }
+  ;
+  return r;
+}
+function sha1(ss) {
+  ss = new Uint8Array(encodeUTF8(ss));
+  var i;
+  var j;
+  var t;
+  var l = (ss.length + 8 >>> 6 << 4) + 16;
+  var s = new Uint8Array(l << 2);
+  s.set(new Uint8Array(ss.buffer)), s = new Uint32Array(s.buffer);
+  for (t = new DataView(s.buffer), i = 0; i < l; i++) s[i] = t.getUint32(i << 2);
+  s[ss.length >> 2] |= 0x80 << 24 - (ss.length & 3) * 8;
+  s[l - 1] = ss.length << 3;
+  ss = [];
+  l = [function () {
+    return m[1] & m[2] | ~m[1] & m[3];
+  }, function () {
+    return m[1] ^ m[2] ^ m[3];
+  }, function () {
+    return m[1] & m[2] | m[1] & m[3] | m[2] & m[3];
+  }, function () {
+    return m[1] ^ m[2] ^ m[3];
+  }];
+  var rol = function rol(n, c) {
+    return n << c | n >>> 32 - c;
+  };
+  var k = [1518500249, 1859775393, -1894007588, -899497514];
+  var m = [1732584193, -271733879, null, null, -1009589776];
+  m[2] = ~m[0], m[3] = ~m[1];
+  for (i = 0; i < s.length; i += 16) {
+    var o = m.slice(0);
+    for (j = 0; j < 80; j++) ss[j] = j < 16 ? s[i + j] : rol(ss[j - 3] ^ ss[j - 8] ^ ss[j - 14] ^ ss[j - 16], 1), t = rol(m[0], 5) + l[j / 20 | 0]() + m[4] + ss[j] + k[j / 20 | 0] | 0, m[1] = rol(m[1], 30), m.pop(), m.unshift(t);
+    for (j = 0; j < 5; j++) m[j] = m[j] + o[j] | 0;
+  }
+  ;
+  t = new DataView(new Uint32Array(m).buffer);
+  {
+    i = 0;
+    for (; i < 5; i++) m[i] = t.getUint32(i << 2);
+  }
+  ss = Array.prototype.map.call(new Uint8Array(new Uint32Array(m).buffer), function (e) {
+    return (e < 16 ? "0" : "") + e.toString(16);
+  }).join("");
+  return ss;
+}
+var ret = sha1("123456");
+console.log("sha1('123456') ==>", ret);
