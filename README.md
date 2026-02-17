@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://meowshield.com/">
-    <img src="https://meowshield.com/logo.jpg" alt="MeowShield Logo" width="120" height="120">
+    <img src="https://meowshield.com/img/logo.jpg" alt="MeowShield Logo" width="120" height="120">
   </a>
 
   <h1>MeowShield</h1>
@@ -108,7 +108,7 @@ MeowShield offers three distinct tiers of security configuration:
 
 平台提供多种保护级别，以满足不同的安全需求，同时保持与现代及传统 JavaScript 环境的完美兼容。
 
-🌐 **官方网站:** https://meowshield.com/
+🌐 **官方网站:** https://meowshield.com/zh
 
 ## ✨ 核心功能
 
@@ -145,7 +145,7 @@ MeowShield 提供三个主要的保护层级：
 
 ## 🛠️ 使用方法
 
-1.  **输入:** 将您的 JavaScript 源代码粘贴到 [meowshield.com](https://meowshield.com/) 的输入编辑器中。
+1.  **输入:** 将您的 JavaScript 源代码粘贴到 [meowshield.com](https://meowshield.com/zh) 的输入编辑器中。
 2.  **配置:** 选择保护选项和安全级别（低/中/高）。
 3.  **混淆:** 点击 **Obfuscate**（混淆）按钮。
 4.  **输出:** 下载或复制保护后的代码即可使用。
